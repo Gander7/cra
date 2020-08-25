@@ -1,0 +1,16 @@
+language: generic
+sudo: required
+
+services:
+    - docker
+
+before_install:
+    - docker build -t gander7/cra -f Dockerfile.dev .
+
+script:
+    - docker run -r CI=true gander7/cra npm run test
+
+after_success:
+    - docker build -t gander7/cra .
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push gander7/cra
