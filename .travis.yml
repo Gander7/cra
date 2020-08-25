@@ -5,7 +5,7 @@ services:
 before_install:
 - docker build -t gander7/cra -f Dockerfile.dev .
 script:
-- docker run -e CI=true gander7/cra npm run test
+- docker run -e CI=true gander7/cra yarn run test
 after_success:
 - docker build -t gander7/cra .
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
